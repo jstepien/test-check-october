@@ -3,7 +3,8 @@
             [clojure.test.check.clojure-test :refer [defspec]]
             [clojure.test.check.generators :as gen]
             [clojure.test.check.properties :as prop]
-            [test-check-october.core :refer :all]))
+            [test-check-october.core :refer :all]
+            [clojure.spec.test.alpha :as st]))
 
 (deftest t-steps-per-hour
   (are [steps seconds]
@@ -56,3 +57,8 @@
     [coll (gen/vector gen/int)]
     (= coll
        (jan-reverse (jan-reverse coll)))))
+
+
+(st/check `jan-reverse {:clojure.spec.test.check/opts {:num-tests 10}})
+
+
